@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cadastro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input formControlName="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Data de Nascimento</ion-label>
+      <ion-input formControlName="dataNascimento" placeholder="DD/MM/AAAA"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">CEP</ion-label>
+      <ion-input formControlName="cep" (ionBlur)="buscarEndereco()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Endereço</ion-label>
+      <ion-input formControlName="endereco" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cidade</ion-label>
+      <ion-input formControlName="cidade" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Estado</ion-label>
+      <ion-input formControlName="estado" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Matrícula</ion-label>
+      <ion-input formControlName="matricula"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Unidade</ion-label>
+      <ion-select formControlName="unidade">
+        <ion-select-option value="Bangu">Bangu</ion-select-option>
+        <ion-select-option value="Bonsucesso">Bonsucesso</ion-select-option>
+        <ion-select-option value="Campo Grande">Campo Grande</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Curso</ion-label>
+      <ion-select formControlName="curso">
+        <ion-select-option value="Analise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</ion-select-option>
+        <ion-select-option value="Engenharia">Engenharia</ion-select-option>
+        <ion-select-option value="Administração">Administração</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Senha</ion-label>
+      <ion-input formControlName="senha" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!cadastroForm.valid">Cadastrar</ion-button>
+  </form>
+</ion-content>
