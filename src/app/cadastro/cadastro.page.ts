@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';  // Para autentica�
 import { AngularFirestore } from '@angular/fire/compat/firestore';  // Para Firestore
 import { HttpClient } from '@angular/common/http';  // Para fazer a requisição ViaCEP
 import { Router } from '@angular/router';  // Para navegação
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 @Component({
   selector: 'app-cadastro',
@@ -17,7 +19,6 @@ export class CadastroPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,  // Injetando o FormBuilder para construir o formulário
-    private afAuth: AngularFireAuth,  // Firebase Authentication
     private firestore: AngularFirestore,  // Firebase Firestore
     private http: HttpClient,  // Cliente HTTP para ViaCEP
     private router: Router  // Navegação
@@ -63,13 +64,14 @@ export class CadastroPage implements OnInit {
 
   // Método para submeter o cadastro
   onSubmit() {
+    const auth = getAuth();
+    console.log(auth)
     if (this.cadastroForm.valid) {
       const { email, senha, nome, dataNascimento, cep, endereco, cidade, estado, matricula, unidade, curso } = this.cadastroForm.value;
-      
       // Criar o usuário no Firebase Auth
-      this.afAuth.createUserWithEmailAndPassword(email, senha).then((userCredential) => {
+      createUserWithEmailAndPassword(auth,email, senha).then((userCredential: { user: { uid: any; }; }) => {
         const userId = userCredential.user?.uid;
-
+        console.log('Usuário criado com sucesso: ', userId);
         // Salvar informações do usuário no Firestore
         this.firestore.collection('usuarios').doc(userId).set({
           nome,
@@ -84,7 +86,7 @@ export class CadastroPage implements OnInit {
           curso
         }).then(() => {
           alert('Cadastro realizado com sucesso!');
-          this.router.navigate(['/feed']);  // Redirecionar para o feed
+          this.router.navigate(['/login']);  // Redirecionar para o feed
         }).catch(error => {
           console.error('Erro ao salvar dados do usuário: ', error);
         });
