@@ -1,3 +1,23 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-menu side="start" content-id="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/chat">
+        <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+        <ion-label>Chat</ion-label>
+      </ion-item>
+      <ion-item routerLink="/equipe">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Equipe</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Principal conteúdo da aplicação -->
+<ion-router-outlet id="main-content"></ion-router-outlet>

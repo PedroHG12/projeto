@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-feed',
@@ -7,13 +6,26 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./feed.page.scss'],
 })
 export class FeedPage implements OnInit {
-  publicacoes: any[] = [];
+  posts: any[] = [];  // Inicialize a variável 'posts' como um array vazio
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor() {}
 
   ngOnInit() {
-    this.firestore.collection('publicacoes').valueChanges().subscribe(data => {
-      this.publicacoes = data;
-    });
+    // Exemplo de posts. Você pode substituir isso com dados vindos de uma API ou banco de dados.
+    this.posts = [
+      {
+        id: 1,
+        content: 'Primeiro post!',
+        author: 'João Silva',
+        date: '2024-10-11',
+      },
+      {
+        id: 2,
+        content: 'Aqui está outro post.',
+        author: 'Maria Souza',
+        date: '2024-10-10',
+      },
+      // Adicione mais posts se necessário
+    ];
   }
 }
