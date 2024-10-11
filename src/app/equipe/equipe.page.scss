@@ -1,0 +1,25 @@
+/* Centralizar as imagens e definir um tamanho médio */
+ion-card img {
+    display: block;
+    margin: 0 auto;
+    width: 200px; /* Define o tamanho médio das imagens */
+    height: auto;
+    border-radius: 8px; /* Adiciona bordas arredondadas, opcional */
+  }
+  
+  /* Justificar o texto nos headers dos cards */
+  ion-card-header {
+    text-align: justify;
+  }
+  
+  /* Centralizar os títulos dos cards */
+  ion-card-title {
+    text-align: center;
+  }
+  
+  /* Centralizar os subtítulos dos cards */
+  ion-card-subtitle {
+    text-align: center;
+    color: gray; /* Define uma cor cinza para o subtítulo, opcional */
+  }
+  

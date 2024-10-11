@@ -16,10 +16,16 @@
       <ion-input formControlName="senha" type="password"></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!loginForm.valid">Entrar</ion-button>
-    
-    <ion-button expand="full" fill="outline" (click)="irParaCadastro()">Cadastre-se</ion-button>
+    <!-- Botão Entrar -->
+    <ion-button expand="full" type="submit" [disabled]="!loginForm.valid" class="entrar">
+      Entrar
+    </ion-button>
 
-    <ion-button expand="full" color="danger" (click)="loginComGoogle()">Login com Google</ion-button>
+    <!-- Botão Cadastre-se -->
+    <ion-button expand="full" fill="outline" (click)="irParaCadastro()" class="cadastrar">
+      Cadastre-se
+    </ion-button>
+
+   
   </form>
 </ion-content>

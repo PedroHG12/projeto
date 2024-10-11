@@ -1,0 +1,32 @@
+/* Botão Entrar */
+button.entrar {
+    --background: red;
+    --color: white;
+  }
+  
+  /* Botão Cadastre-se */
+  button.cadastrar {
+    --background: white;
+    --border-color: red;
+    --color: red;
+  }
+  
+  /* Alteração de cor ao passar o mouse */
+  button.cadastrar:hover {
+    --background: red;
+    --color: white;
+  }
+  
+  /* Botão Login com Google */
+  button.login-google {
+    --background: white;
+    --border-color: red;
+    --color: red;
+  }
+  
+  /* Alteração de cor ao passar o mouse */
+  button.login-google:hover {
+    --background: red;
+    --color: white;
+  }
+  
