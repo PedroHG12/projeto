@@ -1,32 +1,47 @@
+/* Centraliza a logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Espaçamento acima da logo */
+}
+
+.logo {
+  width: 150px; /* Tamanho médio da logo */
+  height: auto;  /* Mantém a proporção da imagem */
+}
+
+/* Estilos para os botões */
+
 /* Botão Entrar */
-button.entrar {
-    --background: red;
-    --color: white;
-  }
-  
-  /* Botão Cadastre-se */
-  button.cadastrar {
-    --background: white;
-    --border-color: red;
-    --color: red;
-  }
-  
-  /* Alteração de cor ao passar o mouse */
-  button.cadastrar:hover {
-    --background: red;
-    --color: white;
-  }
-  
-  /* Botão Login com Google */
-  button.login-google {
-    --background: white;
-    --border-color: red;
-    --color: red;
-  }
-  
-  /* Alteração de cor ao passar o mouse */
-  button.login-google:hover {
-    --background: red;
-    --color: white;
-  }
-  
+ion-button.entrar {
+  --background: red;
+  --color: white;
+}
+
+/* Botão Cadastre-se */
+ion-button.cadastrar {
+  --background: white;
+  --border-color: red;
+  --color: red;
+  --border-width: 1px; /* Para definir a borda */
+}
+
+/* Alteração de cor ao passar o mouse no botão Cadastre-se */
+ion-button.cadastrar:hover {
+  --background: red;
+  --color: white;
+}
+
+/* Botão Login com Google */
+ion-button.login-google {
+  --background: white;
+  --border-color: red;
+  --color: red;
+  --border-width: 1px;
+}
+
+/* Alteração de cor ao passar o mouse no botão Login com Google */
+ion-button.login-google:hover {
+  --background: red;
+  --color: white;
+}

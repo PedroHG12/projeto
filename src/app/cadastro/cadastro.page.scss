@@ -1,0 +1,35 @@
+
+  
+  /* Estilos dos ion-item e ion-label para alinhamento e cores */
+  
+  /* Alinhamento dos labels */
+  ion-item {
+    --highlight-color-focused: red; /* Cor da borda ao focar no campo */
+  }
+  
+  /* Estilos dos botões */
+  
+  /* Botão Cadastrar */
+  ion-button {
+    --background: red;
+    --color: white;
+  }
+  
+  /* Caso deseje adicionar mais botões, você pode seguir o padrão da página de login */
+  
+  /* Adicionar margem nos inputs */
+  ion-item {
+    margin-bottom: 10px;
+  }
+  
+  /* Para os selects (Unidade e Curso) */
+  ion-select {
+    --placeholder-color: #888;
+    --color-focused: red;
+  }
+  
+  /* Alteração de cor ao passar o mouse em cima do botão */
+  ion-button:hover {
+    --background: darkred;
+  }
+  
