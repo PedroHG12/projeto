@@ -6,39 +6,64 @@ import { HttpClient } from '@angular/common/http';  // Para fazer a requisição
 import { Router } from '@angular/router';  // Para navegação
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
 })
 export class CadastroPage implements OnInit {
-  cadastroForm!: FormGroup;  // Usando o operador de asserção não nula
-
-  cepValido: boolean = true;  // Para controle do CEP
+  cadastroForm!: FormGroup;
+  cepValido: boolean = true;
 
   constructor(
-    private fb: FormBuilder,  // Injetando o FormBuilder para construir o formulário
-    private firestore: AngularFirestore,  // Firebase Firestore
-    private http: HttpClient,  // Cliente HTTP para ViaCEP
-    private router: Router  // Navegação
+    private fb: FormBuilder,
+    private firestore: AngularFirestore,
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    // Inicializando o FormGroup com validações
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       dataNascimento: ['', [Validators.required, Validators.pattern(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/\d{4}$/)]],  // Formato DD/MM/AAAA
-      cep: ['', [Validators.required]],
+      cep: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],  // Exatamente 8 números
       endereco: [''],
       cidade: [''],
       estado: [''],
-      matricula: ['', [Validators.required]],
+      matricula: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],  // Exatamente 8 números
       unidade: ['', [Validators.required]],
       curso: ['', [Validators.required]],
       senha: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  // Função para formatar Data de Nascimento com barras automáticas
+  formatarData(event: any) {
+    let input = event.target.value.replace(/\D/g, '').slice(0, 8);  // Remove não-dígitos
+    let formatted = input;
+    if (input.length > 2) {
+      formatted = `${input.slice(0, 2)}/${input.slice(2)}`;
+    }
+    if (input.length > 4) {
+      formatted = `${input.slice(0, 2)}/${input.slice(2, 4)}/${input.slice(4)}`;
+    }
+    event.target.value = formatted;
+    this.cadastroForm.controls['dataNascimento'].setValue(formatted);
+  }
+
+  // Função para formatar CEP
+  formatarCEP(event: any) {
+    let input = event.target.value.replace(/\D/g, '').slice(0, 8);  // Remove não-dígitos
+    event.target.value = input;
+    this.cadastroForm.controls['cep'].setValue(input);
+  }
+
+  // Função para formatar Matrícula
+  formatarMatricula(event: any) {
+    let input = event.target.value.replace(/\D/g, '').slice(0, 8);  // Remove não-dígitos
+    event.target.value = input;
+    this.cadastroForm.controls['matricula'].setValue(input);
   }
 
   // Método para buscar o endereço usando o ViaCEP
@@ -65,14 +90,12 @@ export class CadastroPage implements OnInit {
   // Método para submeter o cadastro
   onSubmit() {
     const auth = getAuth();
-    console.log(auth)
+    console.log(auth);
     if (this.cadastroForm.valid) {
       const { email, senha, nome, dataNascimento, cep, endereco, cidade, estado, matricula, unidade, curso } = this.cadastroForm.value;
-      // Criar o usuário no Firebase Auth
-      createUserWithEmailAndPassword(auth,email, senha).then((userCredential: { user: { uid: any; }; }) => {
+      createUserWithEmailAndPassword(auth, email, senha).then((userCredential: { user: { uid: any; }; }) => {
         const userId = userCredential.user?.uid;
         console.log('Usuário criado com sucesso: ', userId);
-        // Salvar informações do usuário no Firestore
         this.firestore.collection('usuarios').doc(userId).set({
           nome,
           email,
@@ -86,7 +109,7 @@ export class CadastroPage implements OnInit {
           curso
         }).then(() => {
           alert('Cadastro realizado com sucesso!');
-          this.router.navigate(['/login']);  // Redirecionar para o feed
+          this.router.navigate(['/login']);
         }).catch(error => {
           console.error('Erro ao salvar dados do usuário: ', error);
         });

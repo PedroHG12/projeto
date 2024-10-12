@@ -18,12 +18,12 @@
 
     <ion-item>
       <ion-label position="floating">Data de Nascimento</ion-label>
-      <ion-input formControlName="dataNascimento" placeholder="DD/MM/AAAA"></ion-input>
+      <ion-input formControlName="dataNascimento" placeholder="DD/MM/AAAA" (ionInput)="formatarData($event)"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">CEP</ion-label>
-      <ion-input formControlName="cep" (ionBlur)="buscarEndereco()"></ion-input>
+      <ion-input formControlName="cep" maxlength="8" (ionInput)="formatarCEP($event)" (ionBlur)="buscarEndereco()"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -43,7 +43,7 @@
 
     <ion-item>
       <ion-label position="floating">Matrícula</ion-label>
-      <ion-input formControlName="matricula"></ion-input>
+      <ion-input formControlName="matricula" maxlength="8" type="tel" (ionInput)="formatarMatricula($event)"></ion-input>
     </ion-item>
 
     <ion-item>
