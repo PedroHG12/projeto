@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <h1 class="ion-text-center">Chat</h1>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="fecharModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white">
+  <div class="p-4 space-y-4">
+    <ion-item lines="none" class="mb-2">
+      <ion-avatar slot="start">
+        @if(usuarioSelecionado.foto){
+          <img src="{{usuarioSelecionado.foto}}" alt="Foto do Destinatário">
+        } @else {
+          <ion-icon name="person-circle-outline" id="icone-pessoa" ></ion-icon>
+        }
+      </ion-avatar>
+      <ion-label class="text-gray-800">{{usuarioSelecionado.nome}}</ion-label>
+    </ion-item>
+    <ion-item class="rounded-full overflow-hidden bg-gray-100">
+      <ion-input type="text" [(ngModel)]="novaMensagem" required class="pl-4"></ion-input>
+      <ion-button slot="end" fill="clear" (click)="enviarMensagem()">
+        <ion-icon name="send" slot="icon-only" class="text-blue-600"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </div>
+</ion-content>
