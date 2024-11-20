@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatService } from '../services/chat/chat.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,13 +9,16 @@ import { ChatService } from '../services/chat/chat.service';
 })
 export class ChatPage {
 
-  constructor(private chatService: ChatService) {
+  usuario:any
+
+  constructor(private chatService: ChatService, private auth: AuthService) {
 
     
   }
   mensagens: any
 
   OnInit(): void {
+    this.usuario = this.auth.usuarioAtual
     
     this.chatService.buscarMensagensAnteriores().then((mensagens) => {
       this.mensagens = mensagens;
@@ -27,13 +31,9 @@ export class ChatPage {
   novaMensagem: string = '';
 
   enviarMensagem() {
+
     if (this.novaMensagem.trim()) {
-      this.mensagens.push({
-        remetente:"jose",
-        text: this.novaMensagem,
-        timestamp: new Date().toLocaleTimeString(),
-        sent: true
-      });
+      this.chatService.enviarMensagemGeral(this.usuario, this.novaMensagem)
       this.novaMensagem = '';
     }
   }
