@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat/chat.service';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth/auth.service';
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage {
+export class ChatPage implements OnInit {
 
   usuario:any
 
@@ -17,14 +17,17 @@ export class ChatPage {
   }
   mensagens: any
 
-  OnInit(): void {
-    this.usuario = this.auth.usuarioAtual
-    
-    this.chatService.buscarMensagensAnteriores().then((mensagens) => {
-      this.mensagens = mensagens;
-    });
+  async ngOnInit(){
+    await this.auth.buscarUsuario().then((usuario) => {
+      this.usuario = usuario
+    })
 
-    console.log(this.mensagens)
+    console.log(this.usuario)
+    
+    await (await this.chatService.buscarMensagensAnteriores()).forEach((mensagem) => {
+      this.mensagens = mensagem
+    }
+    )
 
   }
 
@@ -33,7 +36,7 @@ export class ChatPage {
   enviarMensagem() {
 
     if (this.novaMensagem.trim()) {
-      this.chatService.enviarMensagemGeral(this.usuario, this.novaMensagem)
+      this.chatService.enviarMensagemGeral(this.usuario.nome, this.novaMensagem)
       this.novaMensagem = '';
     }
   }

@@ -74,7 +74,7 @@ excluirMensagemRecebidaDoUsuario(id: string) {
 
 async buscarMensagensAnteriores() {
   try {
-    const resposta = this.http.get<any[]>(`${this.apiUrl}/anteriores`);
+    const resposta =  this.http.get<any[]>(`${this.apiUrl}/anteriores`);
     return resposta;
   } catch (error) {
     console.error(`Erro ao buscar mensagens anteriores:`, error);
