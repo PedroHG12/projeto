@@ -1,34 +1,22 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
-  private posts = new BehaviorSubject<any[]>([
-    {
-      id: 1,
-      title: 'Postagem 1',
-      content: 'Conteúdo da primeira postagem',
-      date: '2024-11-12',
-      attachment: null // Campo de anexo (null se não houver)
-    },
-    {
-      id: 2,
-      title: 'Postagem 2',
-      content: 'Conteúdo da segunda postagem',
-      date: '2024-11-11',
-      attachment: null
-    }
-  ]);
+  private apiUrl = 'https://youclass-33tw.onrender.com';
 
-  posts$ = this.posts.asObservable();
+  constructor(private http: HttpClient) { }
 
-  constructor() {}
+enviarPostGeral(usuario: string, conteudo: string,title: string, attachment: string) {
+  return this.http.post<any>(`${this.apiUrl}/enviar-post`, { usuario, conteudo, title, attachment }).subscribe();
+}
 
-  addPost(post: any) {
-    const currentPosts = this.posts.value;
-    const newPost = { ...post, id: currentPosts.length + 1, date: new Date().toISOString().split('T')[0] };
-    this.posts.next([newPost, ...currentPosts]);
-  }
+getPosts(){
+  return this.http.get<any[]>(`${this.apiUrl}/buscar-posts`);
+}
+
+
 }

@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>  <!-- Botão que abre o menu -->
+    </ion-buttons>
     <ion-title>Feed de Publicações</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -28,21 +31,34 @@
 
   <!-- Lista de posts existentes -->
   <ion-list>
-    <ion-item *ngFor="let post of posts">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ post.title }}</ion-card-title>
-          <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          {{ post.content }}
-          <!-- Exibir anexo se houver -->
-          <div *ngIf="post.attachment">
-            <img *ngIf="isImage(post.attachment)" [src]="post.attachment" alt="Anexo" style="max-width: 100%; margin-top: 10px;" />
-            <video *ngIf="isVideo(post.attachment)" controls [src]="post.attachment" style="max-width: 100%; margin-top: 10px;"></video>
+
+    @for(post of posts ; track posts){
+      <ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ post.title }}</ion-card-title>
+            <ion-card-subtitle>Por: {{post.remetente}}</ion-card-subtitle>
+            <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+
+            {{ post.content }}
+            <!-- Exibir anexo se houver -->
+            <div>
+            @if(post.attachment){
+              @if(isImage(post.attachment)){
+                <img src="{{ post.attachment }}" alt="Anexo" style="max-width: 100%; margin-top: 10px;" />
+              } 
+              @if(isVideo(post.attachment)){
+                <video controls src="{{ post.attachment }}" style="max-width: 100%; margin-top: 10px;"></video>
+              }
+            }
           </div>
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    }
   </ion-list>
 </ion-content>
+
