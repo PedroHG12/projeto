@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FeedService } from 'src/app/services/feed/feed.service';
 
 @Component({
   selector: 'app-feed',
@@ -6,26 +7,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed.page.scss'],
 })
 export class FeedPage implements OnInit {
-  posts: any[] = [];  // Inicialize a variável 'posts' como um array vazio
+  posts: any[] = [];
+  newPost = { title: '', content: '', attachment: null as string | null };
 
-  constructor() {}
+  constructor(private feedService: FeedService) { }
 
   ngOnInit() {
-    // Exemplo de posts. Você pode substituir isso com dados vindos de uma API ou banco de dados.
-    this.posts = [
-      {
-        id: 1,
-        content: 'Primeiro post!',
-        author: 'João Silva',
-        date: '2024-10-11',
-      },
-      {
-        id: 2,
-        content: 'Aqui está outro post.',
-        author: 'Maria Souza',
-        date: '2024-10-10',
-      },
-      // Adicione mais posts se necessário
-    ];
+    this.feedService.posts$.subscribe(posts => {
+      this.posts = posts;
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.newPost.attachment = reader.result as string; // Converte para base64
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  addPost() {
+    if (this.newPost.title && this.newPost.content) {
+      this.feedService.addPost(this.newPost); // Adiciona o novo post ao feed
+      this.newPost = { title: '', content: '', attachment: null }; // Reseta o formulário
+    }
+  }
+
+  isImage(file: string): boolean {
+    return file.startsWith('data:image');
+  }
+
+  isVideo(file: string): boolean {
+    return file.startsWith('data:video');
   }
 }
