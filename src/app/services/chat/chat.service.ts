@@ -72,6 +72,34 @@ excluirMensagemRecebidaDoUsuario(id: string) {
 }
 
 
+async buscarMensagensAnteriores() {
+  try {
+    const resposta = this.http.get<any[]>(`${this.apiUrl}/anteriores`);
+    return resposta;
+  } catch (error) {
+    console.error(`Erro ao buscar mensagens anteriores:`, error);
+    throw error;
+    
+  }
+}
+
+async enviarMensagemGeral(usuario:any,conteudo: string) {
+  console.log('Enviando mensagem geral...');
+
+  try {
+    const resposta = this.http.post<any>(`${this.apiUrl}/mensagemGeral`, { conteudo, usuario }).subscribe();
+    return resposta;
+  } catch (error) {
+    console.error(`Erro ao enviar mensagem geral:`, error);
+    throw error;
+  }
+  
+
+
+
+}
+
+
 
 
 }
